@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/utils/app_colors.dart';
+import 'package:portfolio/widgets/title_widget.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -6,9 +8,14 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Main Screen')),
-      body: const Center(
-        child: Text('Welcome to the main screen!'),
+      backgroundColor: AppColors.bgColor,
+      body: Column(
+        children: [
+          TitleWidget(text: "Main Screen", backgroundColor: AppColors.titleBgColor, textColor: AppColors.white,),
+          const Center(
+            child: Text('Welcome to the main screen!'),
+          ),
+        ],
       ),
     );
   }
