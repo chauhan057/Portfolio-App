@@ -22,7 +22,7 @@ class MainScreen extends StatelessWidget {
           BottomNavigationBarItem(icon: Icon(Icons.work), label: 'Projects'),
           BottomNavigationBarItem(icon: Icon(Icons.code), label: 'Skills'),
           BottomNavigationBarItem(icon: Icon(Icons.description), label: 'Resume'),
-          BottomNavigationBarItem(icon: Icon(Icons.contact_mail), label: 'Contact'),
+          // BottomNavigationBarItem(icon: Icon(Icons.contact_mail), label: 'Contact'),
         ],
       ),
     ));

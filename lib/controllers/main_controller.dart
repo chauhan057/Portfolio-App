@@ -15,7 +15,7 @@ class MainController extends GetxController {
     ProjectsView(),
     SkillsView(),
     ResumeView(),
-    ContactView(),
+    // ContactView(),
   ];
 
   void changePage(int index) {
