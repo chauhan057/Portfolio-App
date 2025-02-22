@@ -47,6 +47,7 @@ class _ResumeViewState extends State<ResumeView> {
           //   ),
           // ),
         ],
+
       ),
     );
   }
