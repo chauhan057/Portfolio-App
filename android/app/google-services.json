@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "838679022810",
+    "project_id": "portfolio-15508",
+    "storage_bucket": "portfolio-15508.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:838679022810:android:c083c935674fae9193a9e3",
+        "android_client_info": {
+          "package_name": "com.vishal.portfolio"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVyLR5Tf0ltfF-7F8kvy7x2Ns3wBA2bMU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

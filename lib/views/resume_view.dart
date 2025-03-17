@@ -1,6 +1,9 @@
+import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ResumeView extends StatefulWidget {
   @override
@@ -8,11 +11,51 @@ class ResumeView extends StatefulWidget {
 }
 
 class _ResumeViewState extends State<ResumeView> {
-  final String resumeUrl = 'https://drive.google.com/uc?export=download&id=1PWtPhTzZUFEw6ea5_x-aOxIG2nrOSFSX';
+  final String resumeUrl = 'https://drive.google.com/uc?export=download&id=1fsFcbvAw4S2j5HOfzKFptZVFr8cGdEgb';
+  bool isDownloading = false;
 
-  void _launchURL(String url) async {
-    if (!await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication)) {
-      throw 'Could not launch $url';
+  Future<void> requestStoragePermission() async {
+    var status = await Permission.storage.status;
+
+    if (status.isDenied || status.isRestricted || status.isPermanentlyDenied) {
+      status = await Permission.storage.request();
+    }
+
+    if (!status.isGranted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Storage permission is required to download.")),
+      );
+      return;
+    }
+
+    downloadFile();
+  }
+
+  Future<void> downloadFile() async {
+    setState(() {
+      isDownloading = true;
+    });
+
+    try {
+      // Get directory to save the file
+      final dir = await getExternalStorageDirectory();  // For Android 10+
+      String filePath = '${dir!.path}/Resume.pdf';
+
+      // Download the file
+      Dio dio = Dio();
+      await dio.download(resumeUrl, filePath);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Downloaded to: $filePath")),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Failed to download: $e")),
+      );
+    } finally {
+      setState(() {
+        isDownloading = false;
+      });
     }
   }
 
@@ -21,33 +64,14 @@ class _ResumeViewState extends State<ResumeView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Resume', style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.deepOrangeAccent,
+        backgroundColor: Colors.deepPurple,
       ),
       body: Column(
         children: [
           Expanded(
             child: SfPdfViewer.network(resumeUrl),
           ),
-          // Padding(
-          //   padding: const EdgeInsets.all(16.0),
-          //   child: ElevatedButton.icon(
-          //     style: ElevatedButton.styleFrom(
-          //       backgroundColor: Colors.deepOrangeAccent,
-          //       shape: RoundedRectangleBorder(
-          //         borderRadius: BorderRadius.circular(16),
-          //       ),
-          //       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-          //     ),
-          //     onPressed: () => _launchURL("https://drive.google.com/file/d/1PWtPhTzZUFEw6ea5_x-aOxIG2nrOSFSX/view"),
-          //     icon: const Icon(Icons.download, color: Colors.white),
-          //     label: const Text(
-          //       'Download Resume',
-          //       style: TextStyle(color: Colors.white, fontSize: 16),
-          //     ),
-          //   ),
-          // ),
         ],
-
       ),
     );
   }

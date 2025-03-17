@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import '../main.dart';
 import '../routes/app_routes.dart';
 
 class HomeView extends StatelessWidget {
@@ -19,12 +18,11 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        height: Get.height,
+        height: MediaQuery.of(context).size.height,
         width: Get.width,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF6A11CB), Color(0xFF6A11CB)],
-            // colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
+            colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -36,24 +34,9 @@ class HomeView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 60),
-/*
-                Align(
-                  alignment: Alignment.topRight,
-                  child: IconButton(
-                    icon: Icon(
-                      Get.find<ThemeController>().isDarkMode.value
-                          ? Icons.dark_mode
-                          : Icons.light_mode,
-                      color: Colors.grey[800],
-                    ),
-                    onPressed: () {
-                      Get.find<ThemeController>().toggleTheme();
-                    },
-                  ),
-                ),
-*/
-
                 _buildProfileCard(context),
+                const SizedBox(height: 30),
+                _buildAboutMeSection(),
                 const SizedBox(height: 30),
                 _buildProjectsButton(),
                 const SizedBox(height: 30),
@@ -117,9 +100,34 @@ class HomeView extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           const Text(
-            '🚀 Flutter Developer\n⚡ Building high-performance apps\n🎯 Skilled in Flutter, Dart, Kotlin, Java & GetX\n🌐 Transforming ideas into digital reality 💡',
+            '🚀 Flutter Developer | 🎯 Skilled in Flutter, Dart, Kotlin, Java & GetX\n🌐 Transforming ideas into digital reality 💡',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 16, color: Colors.white70, height: 1.5),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAboutMeSection() {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.white.withOpacity(0.2),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const [
+          Text(
+            '👋 About Me',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+          SizedBox(height: 10),
+          Text(
+            'I am a passionate Flutter developer with 2+ years of experience building scalable and high-performance mobile applications. '
+                'My expertise includes Dart, Kotlin, Java, and the GetX framework. I enjoy transforming complex ideas into elegant digital solutions.',
+            style: TextStyle(color: Colors.white70, fontSize: 16, height: 1.5),
           ),
         ],
       ),
@@ -165,6 +173,7 @@ class HomeView extends StatelessWidget {
             _buildSocialIcon(LucideIcons.linkedin, 'https://www.linkedin.com/in/vishal-chauhan-783583221'),
           ],
         ),
+        const SizedBox(height: 15),
       ],
     );
   }
