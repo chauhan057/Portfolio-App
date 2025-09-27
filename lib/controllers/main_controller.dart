@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:portfolio/views/skills_view.dart';
 import 'package:portfolio/views/resume_view.dart';
 
-import '../views/contact_screen.dart';
 import '../views/home_screen.dart';
 import '../views/projects_screen.dart';
 

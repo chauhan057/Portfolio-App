@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -11,7 +10,8 @@ class ResumeView extends StatefulWidget {
 }
 
 class _ResumeViewState extends State<ResumeView> {
-  final String resumeUrl = 'https://drive.google.com/uc?export=download&id=1fsFcbvAw4S2j5HOfzKFptZVFr8cGdEgb';
+  final String resumeUrl =
+      'https://drive.google.com/uc?export=download&id=1fsFcbvAw4S2j5HOfzKFptZVFr8cGdEgb';
   bool isDownloading = false;
 
   Future<void> requestStoragePermission() async {
@@ -38,20 +38,20 @@ class _ResumeViewState extends State<ResumeView> {
 
     try {
       // Get directory to save the file
-      final dir = await getExternalStorageDirectory();  // For Android 10+
+      final dir = await getExternalStorageDirectory(); // For Android 10+
       String filePath = '${dir!.path}/Resume.pdf';
 
       // Download the file
       Dio dio = Dio();
       await dio.download(resumeUrl, filePath);
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Downloaded to: $filePath")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Downloaded to: $filePath")));
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Failed to download: $e")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Failed to download: $e")));
     } finally {
       setState(() {
         isDownloading = false;
@@ -66,13 +66,7 @@ class _ResumeViewState extends State<ResumeView> {
         title: const Text('My Resume', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.deepPurple,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SfPdfViewer.network(resumeUrl),
-          ),
-        ],
-      ),
+      body: Column(children: [Expanded(child: SfPdfViewer.network(resumeUrl))]),
     );
   }
 }
